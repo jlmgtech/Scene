@@ -83,3 +83,20 @@ There's also a shortcut for doing local useState:
 ### Coming Soon:
 * animatable transitions between show calls (anim decorator)
 * realtime updates from external data sources (realtime decorator)
+* replayable interactions (replay decorator)
+ 
+#### notes
+
+* animations can happen at the beginning and at the end of a show call, so the `await` should include those transitions.
+* when a show call is replaced by another, all visible shots within the current Scene should have a chance to play their exit animations.
+    * an idea: when you call `show()`, all `<Scene>`s that are instantiated are recorded into that shot so they can be manually exited by our framework.
+ 
+```js
+    shot.show(
+        <div>
+            <Scene director={a} />
+            <Scene director={b} />
+        </div>
+    );
+```
+^ All `<Scene>`s will be recorded into `shot` so that it can remember to await their exit transitions when we call show again.
