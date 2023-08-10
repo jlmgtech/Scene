@@ -5,7 +5,7 @@ import DeferredShot from "./plugins/DeferredShot";
 import CaptureShot from "./plugins/CaptureShot";
 
 export default function Scene({director}) {
-  const [comp, setComp] = useState(<div>loading</div>);
+  const [comp, setComp] = useState(<></>);
   useEffect(() => {
 
     // plugins are class decorators:

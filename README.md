@@ -84,6 +84,7 @@ There's also a shortcut for doing local useState:
 * animatable transitions between show calls (anim decorator)
 * realtime updates from external data sources (realtime decorator)
 * replayable interactions (replay decorator)
+* support React.StrictMode?
  
 #### notes
 
