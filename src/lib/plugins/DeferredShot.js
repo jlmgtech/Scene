@@ -1,22 +1,3 @@
-//import ShotPlugin from "./ShotPlugin";
-
-//export default class DeferredShot extends ShotPlugin {
-//  constructor(parent) {
-//    super(parent);
-//    this.deferrals = [];
-//  }
-//  defer(action) {
-//    this.deferrals.push(action);
-//  }
-//  async finalize() {
-//    let action;
-//    while (action = this.deferrals.pop()) {
-//      await action();
-//    }
-//    return this.parent.finalize();
-//  }
-//};
-
 export default function DeferredShot(classDef) {
   return function(...args) {
 
@@ -30,6 +11,7 @@ export default function DeferredShot(classDef) {
     const oldFinalize = this.finalize;
     this.finalize = async function(...args) {
       let action;
+      // eslint-disable-next-line no-cond-assign
       while (action = this.deferrals.pop()) {
         await action();
       }
