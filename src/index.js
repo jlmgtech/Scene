@@ -15,14 +15,14 @@ async function sub(shot) {
   );
 }
 
-async function main(slot) {
-  const rsp = await slot.capture(<button onClick={() => slot.yeet(1)}> click me </button>);
-  await slot.show(<div> result is {rsp} </div>);
+async function main(shot) {
+  const rsp = await shot.capture(<button onClick={() => shot.yeet(1)}> click me </button>);
+  await shot.show(<div> result is {rsp} </div>);
   await delay(1000);
-  await slot.show(<div> loaded </div>);
+  await shot.show(<div> loaded </div>);
   for (;;) {
     for (let i = 0; i < 5; i++) {
-      await slot.show(<>
+      await shot.show(<>
         <div> counted {i} seconds. </div>
         <Scene director={sub} />
         <Scene director={sub} />
@@ -31,9 +31,9 @@ async function main(slot) {
       </>);
       await delay(1000);
     }
-    await slot.show(<div> done </div>);
+    await shot.show(<div> done </div>);
     await delay(1000);
-    await slot.reset();
+    await shot.reset();
   }
 }
 
