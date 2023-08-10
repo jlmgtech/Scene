@@ -1,70 +1,74 @@
-# Getting Started with Create React App
+# Scene
+Reusable UI flows
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+### Getting Started
 
-## Available Scripts
 
-In the project directory, you can run:
+    import React from 'react';
+    import ReactDOM from 'react-dom/client';
+    import Scene from "@jlmgtech/scene";
+    import { delay } from "@jlmgtech/scene-utils";
 
-### `npm start`
+    // look here:
+    async function main(shot) {
+        await shot.show(<div>Hello</div>);
+        await delay(1000);
+        await show.show(<div>world!</div>);
+    }
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(<Scene director={main} />);
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### Reference
 
-### `npm test`
+#### shot.show(component): Promise<void>
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+    await show(<div>hi</div>);
 
-### `npm run build`
+There's also a shortcut for doing local useState:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+    await show(
+        (fname, setFname) =>
+        (lname, setLname) =>
+        <>
+            <div>Hello, {fname} {lname}!</div>
+            <input onChange={e => setFname(e.target.value)} />
+            <input onChange={e => setLname(e.target.value)} />
+        </>
+    );
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+#### shot.defer(action)
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+    await shot.show("hi");
+    await shot.defer(() => console.log("world!");
+    await shot.defer(() => console.log("Hello ");
+    // when the function ends or is interrupted, deferred actions are run in
+    // reverse order.
 
-### `npm run eject`
+#### shot.capture(component): Promise<any>
+#### shot.yeet(value: any): void
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+    await shot.capture(<button onClick={shot.yeet}>ok</button>);
+    await shot.capture(
+        (fname, setFname) =>
+        (lname, setLname) =>
+        <>
+            <div>Hello, {fname} {lname}!</div>
+            <input onChange={e => setFname(e.target.value)} />
+            <input onChange={e => setLname(e.target.value)} />
+            <button onClick={()=> shot.yeet({fname, lname})}>OK</button>
+        </>
+    );
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+#### shot.reset(): Promise<void>
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+    await shot.show(<div><input /></div>);
+    // if we show again, the input will contain whatever it had before:
+    await shot.show(<div><input /></div>);
+    await shot.reset();
+    // but not anymore...
+    await shot.show(<div><input /></div>);
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+### Coming Soon:
+* animatable transitions between show calls (anim decorator)
+* realtime updates from external data sources (realtime decorator)
