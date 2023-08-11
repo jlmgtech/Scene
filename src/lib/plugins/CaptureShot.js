@@ -3,8 +3,8 @@ export default function CaptureShot(classDef) {
     classDef.apply(this, args);
     this.resolver = () => {};
 
-    this.yeet = async (value) => {
-      // yeet just resolves the promise returned by show
+    this.answer = async (value) => {
+      // answer just resolves the promise returned by show
       this.resolver(value);
     };
 
